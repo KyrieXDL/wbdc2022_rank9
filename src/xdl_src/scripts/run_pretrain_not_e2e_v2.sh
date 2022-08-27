@@ -1,0 +1,61 @@
+python -m torch.distributed.run --nproc_per_node=2 src/xdl_src/pretrain.py \
+    --flag 'pretrain_not_e2e_v2'\
+    --zip_frame_path '/opt/ml/input/data/zip_frames/unlabeled/' \
+    --zip_feat_path '/opt/ml/input/data/zip_feats_unlabeled/unlabeled.zip'\
+    --anno_path '/opt/ml/input/data/annotations/unlabeled.json' \
+    --labeled_anno_path '/opt/ml/input/data/annotations/train_labeled.json'\
+    --labeled_zip_feat_path '/opt/ml/input/data/zip_feats_clip/labeled.zip'\
+    --device 'cuda' \
+    --distributed\
+    --dist_url 'tcp://127.0.0.1:28766'\
+    --device_ids '0,1' \
+    --phase 'train'\
+    --model_save_path './src/xdl_src/saved_models/pretrain_not_e2e_v2'\
+    --output_dir './src/xdl_src/output/logs'\
+    --batch_size 26\
+    --accumu_grad_step 1\
+    --epochs 20\
+    --lr_pretrained 1e-5\
+    --lr_random 5e-5\
+    --warmup_steps 0.1\
+    --frame_encoder_arch 'clip_vit'\
+    --frame_encoder_path './opensource_models/pretrain_models/clip_vit_base_32/pytorch_model.bin'\
+    --frame_encoder_config_path './opensource_models/pretrain_models/clip_vit_base_32/config.json'\
+    --visual_encoder_arch 'transformer_prenorm'\
+    --visual_encoder_path ''\
+    --visual_encoder_config_path './src/xdl_src/configs/visual_encoder_cls_config_small.json'\
+    --text_encoder_arch 'bert'\
+    --text_encoder_path './opensource_models/pretrain_models/chinese-macbert-base'\
+    --multimodal_config_path './src/xdl_src/configs/cross_attention_config.json'\
+    --fusion 'cross_attention' \
+    --cross_type 'image_text' \
+    --loss 'cross_entropy'\
+    --max_title_len 90\
+    --max_asr_len 90\
+    --max_ocr_len 90\
+    --max_frames 32\
+    --use_asr\
+    --use_ocr\
+    --use_visual_encoder \
+    --visual_embed_dim 768 \
+    --text_embed_dim 768\
+    --mm_embed_dim 768\
+    --mlm_probability 0.15\
+    --mfm_probability 0.15\
+    --queue_size 4108\
+    --schedule_type 'poly'\
+    --itc_weight 1.0\
+    --ima_weight 0\
+    --itm_weight 1.0\
+    --mlm_weight 1.0\
+    --tasks 'mlm,itc,mfm,itm'\
+    --pooling ''\
+    --num_workers 2\
+    --prefetch 4\
+    --use_fp16\
+    --model_type 1\
+    --max_epochs 6\
+    --use_labeled_data\
+
+    
+    

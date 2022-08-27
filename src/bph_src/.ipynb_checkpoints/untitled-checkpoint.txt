@@ -1,0 +1,2 @@
+env/wbdc2022_semifinal/src/bph_src/data/checkpoint/model_0731/clip_roberta_epoch15_v2_fgm/model_epoch_swa_mean_f1_0.7164_swa_1_5.bin
+env/wbdc2022_semifinal/src/bph_src/data/checkpoint/model_0804/clip_macbert_large10_v4/model_epoch_swa_mean_f1_0.7124_swa_1_3.bin
